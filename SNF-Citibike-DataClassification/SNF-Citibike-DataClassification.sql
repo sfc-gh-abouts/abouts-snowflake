@@ -9,6 +9,7 @@ use warehouse load_wh;
 use schema citibike.demo;
 
 -- this query should take about 15s with 2XL
+-- this is limited to 25K rows for the demo, but could be extended to the full trips table as desired
 create or replace table trips_tbl as select * from trips_vw sample(25000 rows);
 
 -- optional
