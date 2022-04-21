@@ -1,4 +1,4 @@
-# this is a placeholder readme
+# Key Information:
 
 - this has been designed to [extend Citibike v4](https://github.com/snowflakecorp/citibike)
 - the plan is to fork the main Citibike repo and then contribute this as an extension of that project
