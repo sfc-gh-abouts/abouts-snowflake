@@ -1,0 +1,22 @@
+{
+    "sqltools.connections": [
+        {
+            "authenticator": "EXTERNALBROWSER",
+            "ocspOptions": {
+                "ocspFailOpen": true
+            },
+            "snowflakeOptions": {
+                "clientSessionKeepAlive": true,
+                "clientSessionKeepAliveHeartbeatFrequency": 3600,
+                "role": "ACCOUNTADMIN"
+            },
+            "previewLimit": 50,
+            "driver": "Snowflake",
+            "name": "SNF_abouts_sfc",
+            "account": "mva55597.us-east-1",
+            "username": "andy.bouts@snowflake.com",
+            "database": "A_TEST_DB",
+            "warehouse": "ANDYB_DEMO_WH"
+        }
+    ]
+}
