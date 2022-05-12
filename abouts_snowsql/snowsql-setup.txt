@@ -1,0 +1,69 @@
+# snowsql information
+# the snowslq CLI was installed at the following location with a bash shell
+# (base) abouts@C02G847XML7H:~$ which snowsql
+# /Applications/SnowSQL.app/Contents/MacOS/snowsql
+# (base) abouts@C02G847XML7H:~$
+
+# reference doc: https://github.com/snowflakecorp/citibike/wiki/V4_2-Setting-Up-Your-Account#load-the-reset-full-script
+# to connect to my demo account as john for citibike
+cd /Users/abouts/Documents/GitHub/citibike/core/4\ -\ reset/weight_files
+# citibike - john
+snowsql -a mva55597.us-east-1 -u john
+
+    use role dba_citibike;
+    create or replace database citibike_V4_reset;
+    create or replace schema citibike_V4_reset.reset;
+    create stage if not exists weights;
+    rm @weights;
+    put file://?*.csv @weights;
+
+
+john#(no warehouse)@(no database).(no schema)>    use role dba_citibike;
+                                                  create or replace database citibike_V4_reset;
+                                                  create or replace schema citibike_V4_reset.reset;
+                                                  create stage if not exists weights;
+                                                  rm @weights;
+                                                  put file://?*.csv @weights;
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.249s
++--------------------------------------------------+
+| status                                           |
+|--------------------------------------------------|
+| Database CITIBIKE_V4_RESET successfully created. |
++--------------------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.304s
++------------------------------------+
+| status                             |
+|------------------------------------|
+| Schema RESET successfully created. |
++------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.179s
++------------------------------------------+
+| status                                   |
+|------------------------------------------|
+| Stage area WEIGHTS successfully created. |
++------------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.271s
++------+--------+
+| name | result |
+|------+--------|
++------+--------+
++-----------------------+--------------------------+-------------+-------------+--------------------+--------------------+----------+---------+
+| source                | target                   | source_size | target_size | source_compression | target_compression | status   | message |
+|-----------------------+--------------------------+-------------+-------------+--------------------+--------------------+----------+---------|
+| riders.csv            | riders.csv.gz            |    13388917 |     4799376 | NONE               | GZIP               | UPLOADED |         |
+| weight_birthyear.csv  | weight_birthyear.csv.gz  |        1895 |        1024 | NONE               | GZIP               | UPLOADED |         |
+| weight_dow.csv        | weight_dow.csv.gz        |         143 |         144 | NONE               | GZIP               | UPLOADED |         |
+| weight_gender.csv     | weight_gender.csv.gz     |          55 |          96 | NONE               | GZIP               | UPLOADED |         |
+| weight_hod.csv        | weight_hod.csv.gz        |        3157 |        1344 | NONE               | GZIP               | UPLOADED |         |
+| weight_membership.csv | weight_membership.csv.gz |         148 |         160 | NONE               | GZIP               | UPLOADED |         |
+| weight_payment.csv    | weight_payment.csv.gz    |         180 |         160 | NONE               | GZIP               | UPLOADED |         |
+| weight_route.csv      | weight_route.csv.gz      |        5347 |        2560 | NONE               | GZIP               | UPLOADED |         |
+| weight_wk.csv         | weight_wk.csv.gz         |       18053 |        7136 | NONE               | GZIP               | UPLOADED |         |
++-----------------------+--------------------------+-------------+-------------+--------------------+--------------------+----------+---------+
+9 Row(s) produced. Time Elapsed: 5.448s
+john#(no warehouse)@CITIBIKE_V4_RESET.RESET>
