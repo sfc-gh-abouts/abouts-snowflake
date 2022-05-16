@@ -67,3 +67,10 @@ john#(no warehouse)@(no database).(no schema)>    use role dba_citibike;
 +-----------------------+--------------------------+-------------+-------------+--------------------+--------------------+----------+---------+
 9 Row(s) produced. Time Elapsed: 5.448s
 john#(no warehouse)@CITIBIKE_V4_RESET.RESET>
+
+
+
+# CLI command from bash prompt including MFA
+(base) abouts@C02G847XML7H:~$ snowsql -c abouts_demo -r DBA_CITIBIKE -w LOAD_WH -q "select V from citibike.demo.trips limit 15" -o header=false -o timing=false -o friendly=false > citibike_out_file.json
+
+(base) abouts@C02G847XML7H:~$
