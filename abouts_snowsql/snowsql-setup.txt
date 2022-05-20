@@ -71,5 +71,13 @@ john#(no warehouse)@CITIBIKE_V4_RESET.RESET>
 
 
 # CLI command from bash prompt including MFA
-(base) abouts@C02G847XML7H:~$ snowsql -c abouts_demo -r DBA_CITIBIKE -w LOAD_WH -q "select V from citibike.demo.trips limit 15" -o header=false -o timing=false -o friendly=false > citibike_out_file.json
-# output_file and output_format should get you what you want
+$ > citibike_out_file.json; sleep 1; snowsql -c abouts_demo -r DBA_CITIBIKE -w LOAD_WH -q "select V from citibike.demo.trips limit 15" -o header=false -o timing=false -o friendly=false -o output_format=plain > citibike_out_file.json
+    # -o header=false ## disabling this option is useful when you want to retrieve data-only in the results
+    # -o timing=false ## specifies whether to display the number of rows produced and elapsed time for SQL statements that have executed
+    # -o friendly=false ## suppresses the startup and exit messages
+    # -o output_format=plain ## specifies the format of the results displayed in the terminal; recommended values for data-only results (used in combination with header and timing set to False): plain , csv, or tsv
+
+# options parameter reference: https://docs.snowflake.com/en/user-guide/snowsql-config.html#label-snowsql-options
+
+$ > citibike_out_file.csv; sleep 1; snowsql -c abouts_demo -r DBA_CITIBIKE -w LOAD_WH -q "select BIKEID, BIKE_TYPE, DURATION from citibike.demo.trips_vw limit 15" -o header=true -o timing=false -o friendly=false -o output_format=plain > citibike_out_file.csv
+# need to review as this creates as fixed width file
