@@ -7,7 +7,7 @@ export PS1='\u@\H:\w$ '
 # added by Snowflake SnowSQL installer v1.2
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
 
-# added by abouts @20May2022
+# manually added by abouts @20May2022 since the 
 export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 # >>> conda initialize >>>
