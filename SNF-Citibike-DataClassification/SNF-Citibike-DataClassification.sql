@@ -8,16 +8,15 @@ alter warehouse load_wh set warehouse_size = 'xxlarge' auto_suspend=120 wait_for
 use warehouse load_wh;
 use schema citibike.demo;
 
--- this query should take about 15s with 2XL
--- this is limited to 25K rows for the demo, but could be extended to the full trips table as desired
-create or replace table trips_tbl as select * from trips_vw sample(25000 rows);
+-- this query should take about 10s with 2XL
+create or replace table trips_tbl as select * from trips_vw sample(35000 rows);
 
--- optional
+-- optional validation
 -- select count(*) from trips_tbl;
 
 
 -------#########-------
--- admin creates data_engineer role and applies grant
+-- claim admin to create data_engineer role; then apply grants
 use role accountadmin;
 create or replace role data_engineer;
 grant imported privileges on database snowflake to role data_engineer;
@@ -31,8 +30,9 @@ grant role data_engineer to user JOHN;
 
 -------#########-------
 -- create policy_admin role
+-- this role will need grants so it can be effectively used -- right now this is just an empty role
 create or replace role policy_admin;
--- this needs grants so it can be effectively used -- right now this is just an empty role
+
 
 -------#########-------
 -- update the context; then run stored procs
@@ -51,12 +51,15 @@ call associate_semantic_category_tags('citibike.demo.trips_tbl',
 
 
 -- step 3 retrieve the tags
+-- once the grants are setup; then use policy_admin
 -- use role policy_admin;
--- this query should take about 15s with medium
+-- use role dba_citibike;
+-- either additional grants or admin is required to call the function
 use role accountadmin;
-alter warehouse load_wh set warehouse_size = 'medium' auto_suspend=60 wait_for_completion = true;
+alter warehouse load_wh set warehouse_size = 'small' auto_suspend=60 wait_for_completion = true;
+use warehouse load_wh;
 
-select * from snowflake.account_usage.tag_references
-    where tag_name = 'PRIVACY_CATEGORY'
-    and tag_value IN ('IDENTIFIER', 'QUASI_IDENTIFIER');
+
+select * from table(citibike.information_schema.tag_references_all_columns('citibike.demo.trips_tbl', 'table'));
+
     
