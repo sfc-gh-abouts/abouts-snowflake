@@ -5,4 +5,4 @@
 
 select * from A_TEST_DB.A_TEST_SCHEMA.TEST_DATA 
     where date >= '2017-01-01'
-    limit 15;
+    limit 50;
